@@ -19,7 +19,10 @@ namespace WalletManual
 
       //do the actual work here
       var auth = serviceProvider.GetService<Auth>();
+      var accounts = serviceProvider.GetService<Accounts>();
       await auth.signInAsync("mikaelmmello@gmail.com", "10BnpJTB!7TV@rW*icFf&5");
+      var x = await accounts.getByName("Banco Inter");
+      Console.WriteLine(x.InitAmount);
       Console.WriteLine("Hello World!");
     }
   }

@@ -7,6 +7,7 @@ namespace WalletCore
   public interface IDatabase
   {
     MyCouchClient Client { get; }
+    MyCouchStore Store { get; }
     void Initialize(Guid dbUser, Guid dbPassword);
   }
 
@@ -17,6 +18,7 @@ namespace WalletCore
     private string dbName { get { return $"bb-{dbUser}"; } }
     private readonly Uri databaseUri = new Uri("https://couch-prod-ams-3.budgetbakers.com");
     private MyCouchClient client = null;
+    private MyCouchStore store = null;
 
     public MyCouchClient Client
     {
@@ -30,6 +32,18 @@ namespace WalletCore
         return client;
       }
     }
+    public MyCouchStore Store
+    {
+      get
+      {
+        if (store == null)
+        {
+          throw new Exception("Uninitialized database");
+        }
+
+        return store;
+      }
+    }
 
     public void Initialize(Guid dbUser, Guid dbPassword)
     {
@@ -40,6 +54,7 @@ namespace WalletCore
       info.BasicAuth = new MyCouch.Net.BasicAuthString(dbUser.ToString(), dbPassword.ToString());
 
       this.client = new MyCouchClient(info);
+      this.store = new MyCouchStore(this.client);
     }
 
     public void Dispose()

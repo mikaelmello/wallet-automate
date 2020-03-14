@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WalletCore
@@ -7,7 +8,10 @@ namespace WalletCore
 
     public static IServiceCollection AddWalletCore(this IServiceCollection services)
     {
+      services.AddMemoryCache();
+
       services.AddScoped<Auth>();
+      services.AddScoped<Accounts>();
       services.AddScoped<IRequest, Request>();
       services.AddScoped<IDatabase, Database>();
       return services;

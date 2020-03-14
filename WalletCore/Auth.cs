@@ -14,7 +14,8 @@ namespace WalletCore
     private readonly IDatabase database;
     private readonly Uri passwordSignOnUri;
     private readonly Uri abcUri;
-    private readonly Regex guidRegex;
+    private readonly Regex guidRegex = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}",
+        RegexOptions.Compiled);
 
     public Auth(IRequest request, IDatabase database)
     {
@@ -23,8 +24,6 @@ namespace WalletCore
 
       this.passwordSignOnUri = new Uri(request.BaseURI, "auth/authenticate/userpass");
       this.abcUri = new Uri(request.BaseURI, "ribeez/user/abc");
-      this.guidRegex = new Regex(@"(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}",
-        RegexOptions.Compiled);
     }
 
     public async Task signInAsync(string username, string password)
