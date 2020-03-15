@@ -23,6 +23,11 @@ namespace WalletCore
 
     public async Task<List<Account>> getAll()
     {
+      if (cache.TryGetValue<List<Account>>("allRecords", out var accounts))
+      {
+        return accounts;
+      }
+
       var query = new Query("_all_docs").Configure(q => q
         .StartKey("-Account")
         .EndKey("-Account\ufff0")
@@ -41,6 +46,8 @@ namespace WalletCore
         cache.Set(account.Name, account, cacheEntryOptions);
       }
 
+      cache.Set("allRecords", list, cacheEntryOptions);
+
       return list;
     }
 
@@ -52,7 +59,7 @@ namespace WalletCore
         account = cache.Get<Account>(name);
       }
 
-      return account;
+      return account ?? throw new ArgumentException($"Account with name {name} not found");
     }
   }
 }
