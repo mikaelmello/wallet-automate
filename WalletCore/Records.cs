@@ -6,6 +6,9 @@ using MyCouch;
 using MyCouch.Requests;
 using WalletCore.Models;
 using Microsoft.Extensions.Caching.Memory;
+using System.Globalization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace WalletCore
 {
@@ -54,6 +57,43 @@ namespace WalletCore
 
       return records
         .Where(r => r.Payee == payee);
+    }
+
+    public async Task addExpense(string date, long amount, string categoryId, string payee, string note,
+        PaymentType paymentType, Account account)
+    {
+      var baseRecord = (await getAll()).First();
+      var record = new Record()
+      {
+        Id = $"Record_{Guid.NewGuid()}",
+        AccountId = account.Id,
+        Accuracy = baseRecord.Accuracy,
+        Amount = amount,
+        CategoryId = categoryId,
+        CurrencyId = baseRecord.CurrencyId,
+        fulltextString = payee.ToLower() + note.ToLower(),
+        Note = note,
+        Payee = payee,
+        PaymentType = paymentType,
+        RecordDate = DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+        RecordState = RecordState.CLEARED,
+        RefAmount = amount,
+        ReservedAuthorId = baseRecord.ReservedAuthorId,
+        ReservedCreatedAt = DateTime.UtcNow,
+        ReservedOwnerId = baseRecord.ReservedOwnerId,
+        ReservedSource = "web",
+        ReservedUpdatedAt = DateTime.UtcNow,
+        SoComplete = baseRecord.SoComplete,
+        SuggestedEnvelopeId = baseRecord.SuggestedEnvelopeId,
+        Transfer = false,
+        Type = RecordType.EXPENSE,
+      };
+
+      await database.Client.Documents.PutAsync(record.Id, JsonConvert.SerializeObject(record,
+    new JsonSerializerSettings
+    {
+      ContractResolver = new CamelCasePropertyNamesContractResolver()
+    }));
     }
   }
 }
