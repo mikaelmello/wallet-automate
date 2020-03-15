@@ -11,6 +11,7 @@ namespace WalletCore
       services.AddMemoryCache();
 
       services.AddScoped<Auth>();
+      services.AddScoped<Records>();
       services.AddScoped<Accounts>();
       services.AddScoped<Categories>();
       services.AddScoped<Currencies>();
