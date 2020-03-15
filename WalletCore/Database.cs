@@ -22,27 +22,11 @@ namespace WalletCore
 
     public MyCouchClient Client
     {
-      get
-      {
-        if (client == null)
-        {
-          throw new Exception("Uninitialized database");
-        }
-
-        return client;
-      }
+      get => client ?? throw new AppDomainUnloadedException("Uninitialized database client");
     }
     public MyCouchStore Store
     {
-      get
-      {
-        if (store == null)
-        {
-          throw new Exception("Uninitialized database");
-        }
-
-        return store;
-      }
+      get => store ?? throw new AppDomainUnloadedException("Uninitialized database store");
     }
 
     public void Initialize(Guid dbUser, Guid dbPassword)
@@ -60,6 +44,7 @@ namespace WalletCore
     public void Dispose()
     {
       this.client.Dispose();
+      this.store.Dispose();
     }
   }
 }
