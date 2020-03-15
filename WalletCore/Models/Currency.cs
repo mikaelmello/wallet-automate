@@ -18,7 +18,6 @@ namespace WalletCore.Models
     public double RatioToReferential { get; set; }
     public bool Referential { get; set; }
     public long Position { get; set; }
-    public string Name { get; set; }
     public bool _deleted { get; set; }
   }
 }
