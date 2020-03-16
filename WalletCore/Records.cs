@@ -60,13 +60,13 @@ namespace WalletCore
     }
 
     public async Task addExpense(string date, long amount, string categoryId, string payee, string note,
-        PaymentType paymentType, Account account)
+        PaymentType paymentType, string accountId)
     {
       var baseRecord = (await getAll()).First();
       var record = new Record()
       {
         Id = $"Record_{Guid.NewGuid()}",
-        AccountId = account.Id,
+        AccountId = accountId,
         Accuracy = baseRecord.Accuracy,
         Amount = amount,
         CategoryId = categoryId,
@@ -75,14 +75,16 @@ namespace WalletCore
         Note = note,
         Payee = payee,
         PaymentType = paymentType,
-        RecordDate = DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+        RecordDate = DateTime
+          .ParseExact(date, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)
+          .ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
         RecordState = RecordState.CLEARED,
         RefAmount = amount,
         ReservedAuthorId = baseRecord.ReservedAuthorId,
-        ReservedCreatedAt = DateTime.UtcNow,
+        ReservedCreatedAt = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
         ReservedOwnerId = baseRecord.ReservedOwnerId,
         ReservedSource = "web",
-        ReservedUpdatedAt = DateTime.UtcNow,
+        ReservedUpdatedAt = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
         SoComplete = baseRecord.SoComplete,
         SuggestedEnvelopeId = baseRecord.SuggestedEnvelopeId,
         Transfer = false,
