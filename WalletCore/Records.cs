@@ -59,18 +59,17 @@ namespace WalletCore
         .Where(r => r.Payee == payee);
     }
 
-    public async Task addExpense(string date, long amount, string categoryId, string payee, string note,
-        PaymentType paymentType, string accountId)
+    public async Task add(string date, long amount, string categoryId, string payee, string note,
+        PaymentType paymentType, string currencyId, string accountId, long envelopeId, RecordType type)
     {
       var baseRecord = (await getAll()).First();
       var record = new Record()
       {
         Id = $"Record_{Guid.NewGuid()}",
         AccountId = accountId,
-        Accuracy = baseRecord.Accuracy,
         Amount = amount,
         CategoryId = categoryId,
-        CurrencyId = baseRecord.CurrencyId,
+        CurrencyId = currencyId,
         fulltextString = payee.ToLower() + note.ToLower(),
         Note = note,
         Payee = payee,
@@ -86,9 +85,9 @@ namespace WalletCore
         ReservedSource = "web",
         ReservedUpdatedAt = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
         SoComplete = baseRecord.SoComplete,
-        SuggestedEnvelopeId = baseRecord.SuggestedEnvelopeId,
+        SuggestedEnvelopeId = envelopeId,
         Transfer = false,
-        Type = RecordType.EXPENSE,
+        Type = type,
       };
 
       await database.Client.Documents.PutAsync(record.Id, JsonConvert.SerializeObject(record,

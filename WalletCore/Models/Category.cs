@@ -127,5 +127,12 @@ namespace WalletCore.Models
 
       return null;
     }
+
+    public static string getIdFromName(string name)
+    {
+      var type = typeof(StandardCategories);
+      return type.GetField(name)?.GetValue(null) as string
+        ?? throw new NotImplementedException($"Missing id of category {name}");
+    }
   }
 }

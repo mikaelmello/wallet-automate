@@ -12,6 +12,7 @@ namespace WalletCore
 
       services.AddScoped<Auth>();
       services.AddScoped<Records>();
+      services.AddScoped<CsvImporter>();
       services.AddScoped<Accounts>();
       services.AddScoped<Categories>();
       services.AddScoped<Currencies>();
