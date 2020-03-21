@@ -90,11 +90,13 @@ namespace WalletCore
         Type = type,
       };
 
+      Console.WriteLine($"Adding record. Payee: {payee}. Note: {note}. Time: {date}");
       await database.Client.Documents.PutAsync(record.Id, JsonConvert.SerializeObject(record,
-    new JsonSerializerSettings
-    {
-      ContractResolver = new CamelCasePropertyNamesContractResolver()
-    }));
+        new JsonSerializerSettings
+        {
+          ContractResolver = new CamelCasePropertyNamesContractResolver()
+        }));
+      Console.WriteLine($"Added");
     }
   }
 }
