@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public static class EnumerableExtensions
   {

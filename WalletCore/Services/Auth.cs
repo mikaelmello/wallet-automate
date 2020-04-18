@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public class Auth
   {

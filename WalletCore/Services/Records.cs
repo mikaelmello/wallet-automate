@@ -10,7 +10,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public class Records
   {

@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using MyCouch;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public interface IDatabase
   {

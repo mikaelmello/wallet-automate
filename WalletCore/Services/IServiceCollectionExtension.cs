@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public static class IServiceCollectionExtension
   {

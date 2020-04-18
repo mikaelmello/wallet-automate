@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public interface IRequest
   {

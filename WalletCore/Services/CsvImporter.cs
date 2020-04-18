@@ -8,7 +8,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using WalletCore.Models;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public class CsvImporter
   {

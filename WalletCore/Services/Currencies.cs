@@ -7,7 +7,7 @@ using MyCouch.Requests;
 using WalletCore.Models;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace WalletCore
+namespace WalletCore.Services
 {
   public class Currencies
   {
